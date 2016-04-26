@@ -14,16 +14,19 @@ for line in open("salaries.txt", 'r'):
 			entry.append(data)
 			#sal_data.append([data[0], data[1], data[2], data[3], data[4], data[5], data[6]])
 		sal_data.append(entry)
-		print()
 
 sorted_sal_data = sorted(sal_data, key=lambda x: float(x[3]))
-print()
-for i in range(0,10):
-	print(sorted_sal_data[i])
-
 print()
 
 print(sorted_sal_data[len(sorted_sal_data) - 4])
 print(sorted_sal_data[len(sorted_sal_data) - 3])
 print(sorted_sal_data[len(sorted_sal_data) - 2])
 print(sorted_sal_data[len(sorted_sal_data) - 1])
+
+salaries = [float(t[3]) for t in sorted_sal_data]
+
+plt.hist(salaries)
+plt.title("Gaussian Histogram")
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+plt.show()
