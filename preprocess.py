@@ -88,11 +88,11 @@ for i in range(-10, 0):
 # print "hehre"
 #print cs_data
 #print sum(cs_salaries) / float(len(cs_salaries))
-# plt.hist(salaries, 100)
-# plt.title("Michigan Tech Salary Distribution")
-# plt.xlabel("Salary")
-# plt.ylabel("Frequency")
-# plt.show()
+plt.hist(salaries, 100)
+plt.title("Michigan Tech Salary Distribution")
+plt.xlabel("Salary")
+plt.ylabel("Frequency")
+plt.show()
 
 information_technology_salaries = [float(t[3]) for t in sorted_sal_data if "Information Technology".lower() in t[2].lower()]
 facilities_management_salaries = [float(t[3]) for t in sorted_sal_data if "Facilities Management".lower() in t[2].lower()]
