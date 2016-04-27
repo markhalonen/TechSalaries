@@ -101,21 +101,39 @@ facil_man_level = [2 for t in facilities_management_salaries]
 # print information_technology_salaries
 # plt.scatter(information_technology_salaries, info_tech_level)
 # plt.show()
-fig = plt.figure()
-ax1 = fig.add_subplot(111)
+
+
+# fig = plt.figure()
+# ax1 = fig.add_subplot(111)
+##CD93D2
 colors = ["#CD93D2","#70C641", "#CD6BD6", "#CAAA32", "#737EDD", "#618731", "#D84894", "#49B47B","#DB512F","#3DAAB6","#D64C5D","#6489BB","#B67031","#8E5B99", "#BA5F7A"]
+colors2 = ["#8C4500","#405CC5","#3DC318","#B380EC","#8DAB3E","#302664","#E09237","#1699E0","#870237","#032B3D","#F084A9","#3A2717"]
+# for i in range(-10, 0):
+# 	dep_name = departments_frequencies[i][1]
+# 	dep_info = getSalariesForDepartment(dep_name, abs(i))
+# 	ax1.scatter(dep_info[0], dep_info[1], s=100, c=colors[abs(i)], marker="s", label=dep_name)
+#
+# ax1.set_ylim([-5,11])
+#
+# # ax1.scatter(information_technology_salaries, info_tech_level, s=10, c='b', marker="s", label='Information Technology')
+# # ax1.scatter(facilities_management_salaries,facil_man_level, s=10, c='r', marker="o", label='Facilites Management')
+# fig.suptitle('Salary Distribution', fontsize=20)
+# plt.xlabel('Salary', fontsize=18)
+# plt.ylabel('Department', fontsize=16)
+# plt.legend(loc='lower right');
+# plt.show()
+
+sets = []
+dep_names = []
 for i in range(-10, 0):
 	dep_name = departments_frequencies[i][1]
+	dep_names.append(dep_name)
 	dep_info = getSalariesForDepartment(dep_name, abs(i))
-	ax1.scatter(dep_info[0], dep_info[1], s=50, c=colors[abs(i)], marker="s", label=dep_name)
+	sets.append(dep_info[0])
+	#ax1.scatter(dep_info[0], dep_info[1], s=100, c=colors[abs(i)], marker="s", label=dep_name)
 
-ax1.set_ylim([-5,11])
-
-# ax1.scatter(information_technology_salaries, info_tech_level, s=10, c='b', marker="s", label='Information Technology')
-# ax1.scatter(facilities_management_salaries,facil_man_level, s=10, c='r', marker="o", label='Facilites Management')
-fig.suptitle('Salary Distribution', fontsize=20)
-plt.xlabel('Salary', fontsize=18)
-plt.ylabel('Department', fontsize=16)
-plt.legend(loc='lower right');
+plt.figure()
+plt.hist(sets,bins=100, stacked=True, color=colors2[:len(sets)], label=dep_names)
+plt.legend(prop={'size': 15})
 plt.show()
 
