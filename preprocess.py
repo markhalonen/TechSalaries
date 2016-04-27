@@ -37,7 +37,10 @@ def get_info_for_Title(title, all_data):
 	return {"title" : title, "count" : len(sal_data), "average" : float(sum(sal_data)) / len(sal_data), "median" : median(sal_data),
 			"min" : min(sal_data), "max" : max(sal_data)}
 
-
+def getSalariesForDepartment(dep, level):
+	salaries = [float(t[3]) for t in sorted_sal_data if dep.lower() in t[2].lower()]
+	lev = [level for t in salaries]
+	return [salaries, lev]
 
 sal_data = []
 for line in open("salaries.txt", 'r'):
@@ -53,7 +56,7 @@ for line in open("salaries.txt", 'r'):
 			#sal_data.append([data[0], data[1], data[2], data[3], data[4], data[5], data[6]])
 		sal_data.append(entry)
 
-insertAllDataIntoDatabase(sal_data, "hello")
+#insertAllDataIntoDatabase(sal_data, "hello")
 
 
 sorted_sal_data = sorted(sal_data, key=lambda x: float(x[3]))
@@ -76,17 +79,9 @@ uValues = list(set(departments))
 xVals = range(0, len(uValues))
 yVals = map(lambda x: departments.count(uValues[x]), xVals)
 departments_frequencies = sorted(map(lambda x: [departments.count(uValues[x]), uValues[x]], xVals), key = lambda j: j[0])
-# print get_info_for_Title("professor", sal_data)
-# print get_info_for_Title("lecturer", sal_data)
-# print get_info_for_Title("cook", sal_data)
-# print get_info_for_Title("president", sal_data)
-# print get_info_for_Title("engineer", sal_data)
-# print get_info_for_Title("senior", sal_data)
-# print get_info_for_Title("research", sal_data)
 
-print get_info_for_Department("computer", sal_data)
-# for i in range(-10, 0):
-# 	print departments_frequencies[i]
+for i in range(-10, 0):
+	print departments_frequencies[i]
 # import pylab
 # pylab.bar(xVals, yVals)
 # pylab.show()
@@ -98,4 +93,29 @@ print get_info_for_Department("computer", sal_data)
 # plt.xlabel("Salary")
 # plt.ylabel("Frequency")
 # plt.show()
+
+information_technology_salaries = [float(t[3]) for t in sorted_sal_data if "Information Technology".lower() in t[2].lower()]
+facilities_management_salaries = [float(t[3]) for t in sorted_sal_data if "Facilities Management".lower() in t[2].lower()]
+info_tech_level = [1 for t in information_technology_salaries]
+facil_man_level = [2 for t in facilities_management_salaries]
+# print information_technology_salaries
+# plt.scatter(information_technology_salaries, info_tech_level)
+# plt.show()
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
+colors = ["#CD93D2","#70C641", "#CD6BD6", "#CAAA32", "#737EDD", "#618731", "#D84894", "#49B47B","#DB512F","#3DAAB6","#D64C5D","#6489BB","#B67031","#8E5B99", "#BA5F7A"]
+for i in range(-10, 0):
+	dep_name = departments_frequencies[i][1]
+	dep_info = getSalariesForDepartment(dep_name, abs(i))
+	ax1.scatter(dep_info[0], dep_info[1], s=50, c=colors[abs(i)], marker="s", label=dep_name)
+
+ax1.set_ylim([-5,11])
+
+# ax1.scatter(information_technology_salaries, info_tech_level, s=10, c='b', marker="s", label='Information Technology')
+# ax1.scatter(facilities_management_salaries,facil_man_level, s=10, c='r', marker="o", label='Facilites Management')
+fig.suptitle('Salary Distribution', fontsize=20)
+plt.xlabel('Salary', fontsize=18)
+plt.ylabel('Department', fontsize=16)
+plt.legend(loc='lower right');
+plt.show()
 
