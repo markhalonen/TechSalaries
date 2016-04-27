@@ -10,6 +10,18 @@ def median(lst):
     else:
             return float(sum(lst[(len(lst)/2)-1:(len(lst)/2)+1]))/2.0
 
+
+def insertAllDataIntoDatabase(all_data, db_name):
+	import sqlite3
+	conn = sqlite3.connect("sal_data")
+	c = conn.cursor()
+	#c.execute("create table employee(name text, title text, department text, salary real, primary key(name, title, department));")
+	for dataPt in all_data:
+		command = 'insert into employee(name, title, department, salary) values("%s", "%s", "%s", %s);'%(dataPt[0], dataPt[1], dataPt[2], dataPt[3])
+		c.execute(command)
+	conn.commit()
+	conn.close()
+
 def get_info_for_Department(department, all_data):
 	#returns [count, avg_salary, median_salary]
 	#all_data is in format [name, title, department, salary, basis, general fund]
@@ -27,10 +39,6 @@ def get_info_for_Title(title, all_data):
 
 
 
-
-
-
-
 sal_data = []
 for line in open("salaries.txt", 'r'):
 	line = line.replace('\n', '')
@@ -44,6 +52,9 @@ for line in open("salaries.txt", 'r'):
 			entry.append(data)
 			#sal_data.append([data[0], data[1], data[2], data[3], data[4], data[5], data[6]])
 		sal_data.append(entry)
+
+insertAllDataIntoDatabase(sal_data, "hello")
+
 
 sorted_sal_data = sorted(sal_data, key=lambda x: float(x[3]))
 
@@ -87,3 +98,4 @@ print get_info_for_Department("computer", sal_data)
 # plt.xlabel("Salary")
 # plt.ylabel("Frequency")
 # plt.show()
+
